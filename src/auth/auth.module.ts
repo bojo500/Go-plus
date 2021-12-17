@@ -23,7 +23,7 @@ import { JwtStrategy, LocalStrategy } from "./strategies";
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, PassportModule ],
 })
 export class AuthModule {
 }

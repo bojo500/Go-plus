@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto, UpdateUserDto } from "./dto";
 import { Roles } from "../shared/decorators";
 import { Role } from "./enum";
+import { AuthGuard } from "@nestjs/passport";
 
 
 @Controller("users")
