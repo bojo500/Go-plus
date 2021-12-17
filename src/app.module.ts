@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigService } from "./config/config.service";
-import { ConfigModule } from "./config/config.module";
+import { ConfigModule, ConfigService } from "./config";
 
 @Module({
   imports: [
