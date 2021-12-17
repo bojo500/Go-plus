@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.repository.findOne(+id);
+    return this.repository.findOne(id);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

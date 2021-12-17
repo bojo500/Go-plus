@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from "@nestjs/throttler";
 import { AuthModule } from "./auth/auth.module";
 import { CarsModule } from './cars/cars.module';
+import { CarparksModule } from './carparks/carparks.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CarsModule } from './cars/cars.module';
     UsersModule,
     AuthModule,
     CarsModule,
+    CarparksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
