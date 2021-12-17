@@ -11,6 +11,7 @@ import { AuthModule } from "../auth/auth.module";
     TypeOrmModule.forFeature([User]),
     PassportModule.register({defaultStrategy:'jwt'}),
     forwardRef(() => AuthModule)
+
   ],
   controllers: [UsersController],
   providers: [UsersService],

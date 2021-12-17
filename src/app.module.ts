@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from "./config";
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from "@nestjs/throttler";
 import { AuthModule } from "./auth/auth.module";
+import { CarsModule } from './cars/cars.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AuthModule } from "./auth/auth.module";
     }),
     UsersModule,
     AuthModule,
+    CarsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
