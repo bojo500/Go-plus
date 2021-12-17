@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "./config";
 import { UsersModule } from './users/users.module';
+import { ThrottlerModule } from "@nestjs/throttler";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -29,7 +31,12 @@ import { UsersModule } from './users/users.module';
       },
       inject: [ConfigService],
     }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
