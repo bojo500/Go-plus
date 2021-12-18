@@ -1,4 +1,12 @@
-import { BadRequestException, forwardRef, HttpStatus, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  forwardRef,
+  HttpStatus,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException
+} from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
@@ -38,14 +46,23 @@ export class AuthService {
     };
   }
 
-  async register(user: RegisterDto): Promise<User> {
+  async register(user: RegisterDto): Promise<any> {
     const _user: User = await this.usersService.findOneByEmail(user?.email);
     const _userName: User = await this.usersService.findOneByUsername(user?.userName);
     if (_user || _userName) {
       this.handleBadRequest("Email or username already exists");
     }
     user.password = await bcrypt.hash(user.password, 10);
-    return this.usersService.createUser(user);
+    try {
+      await this.usersService.createUser(user);
+
+    } catch {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: "Created Successfully",
+      statusCode: HttpStatus.CREATED
+    };
   }
 
   handleBadRequest(message: string): void {

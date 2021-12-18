@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Carpark } from "../../carparks/entities/carpark.entity";
 
 @Entity()
 export class Car {
@@ -11,4 +12,8 @@ export class Car {
 
   @Column()
   color: string;
+
+  @OneToMany(() => Carpark, carpark => carpark.car)
+  @JoinTable()
+  carparks: Carpark[];
 }

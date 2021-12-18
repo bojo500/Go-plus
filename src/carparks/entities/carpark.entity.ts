@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Car } from "../../cars/entities/car.entity";
 
 @Entity()
 export class Carpark {
@@ -8,6 +9,10 @@ export class Carpark {
 
 
   @Column({default: null})
-  condition: string
+  condition: string;
+
+  @ManyToOne(() => Car, car => car.carparks)
+  car: Car;
+
 
 }
