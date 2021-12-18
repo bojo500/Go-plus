@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException
+} from "@nestjs/common";
 import { CreateUserDto, UpdateUserDto } from "./dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
@@ -8,8 +14,16 @@ import { Repository } from "typeorm";
 export class UsersService {
   constructor(@InjectRepository(User) private repository: Repository<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.repository.save(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    try {
+      await this.repository.save(createUserDto);
+    } catch {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Created Successfully',
+      statusCode: HttpStatus.CREATED,
+    };
   }
 
   findAll() {
@@ -20,12 +34,32 @@ export class UsersService {
     return this.repository.findOne(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.repository.update(id,updateUserDto);
+   async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      await this.repository.save({ ...updateUserDto, id });
+    } catch {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Updated Successfully',
+      statusCode: HttpStatus.OK,
+    };
   }
 
-  remove(id: number) {
-    return this.repository.delete(+id);
+  async remove(id: number) {
+    let item = await this.findOne(id);
+    if (!item) {
+      throw new NotFoundException();
+    }
+    try {
+      await this.repository.delete(item.id);
+    } catch {
+      throw new InternalServerErrorException();
+    }
+    return {
+      message: 'Deleted Successfully',
+      statusCode: HttpStatus.OK,
+    };
   }
 
 

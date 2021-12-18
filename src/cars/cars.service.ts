@@ -14,7 +14,7 @@ export class CarsService {
   }
 
   findAll() : Promise<Car[]>{
-    return this.repository.find();
+    return this.repository.find({ relations: ["carparks"] });
   }
 
   findOne(id: number) {
