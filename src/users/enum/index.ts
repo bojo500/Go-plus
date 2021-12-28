@@ -1,1 +1,1 @@
-export * from './Manage-role.enum'
+export * from './roles.enum'
